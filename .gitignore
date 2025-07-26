@@ -1,0 +1,8 @@
+*.code-workspace
+.terraform
+*.hcl
+*.tfstate
+*.tfstate.backup
+*.info
+*.log
+aztfexport/*
