@@ -1,0 +1,28 @@
+# Copy this file to terraform.tfvars and customize the values
+
+# Azure Configuration
+subscription_id = "your-subscription-id-here"
+
+# Policy Configuration
+policy_resource_group_name = "rg-policy-management"
+location                  = "East US"
+policy_name              = "disable-storage-public-access"
+policy_effect            = "DeployIfNotExists"  # Options: Audit, Deny, DeployIfNotExists, Disabled
+
+# Remediation Configuration
+enable_remediation     = true
+remediation_locations  = ["East US", "West US 2", "Central US"]
+
+# Exclusions (optional)
+policy_exclusions = [
+  # "/subscriptions/your-sub-id/resourceGroups/rg-name/providers/Microsoft.Storage/storageAccounts/storage-name"
+]
+
+# Tags
+tags = {
+  Environment = "Production"
+  Project     = "DOJO-Security-Policy"
+  Owner       = "Security-Team"
+  Purpose     = "Storage-Security"
+  CostCenter  = "IT-Security"
+}

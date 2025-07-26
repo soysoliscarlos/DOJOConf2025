@@ -1,0 +1,21 @@
+# Copy this file to terraform.tfvars and customize the values
+
+resource_group_name = "rg-dojo-security-automation"
+location           = "East US"
+logic_app_name     = "logic-dojo-security"
+policy_name        = "require-resource-tags"
+
+tags = {
+  Environment = "Development"
+  Project     = "DOJO-Security-Automation"
+  Owner       = "Security-Team"
+  CostCenter  = "IT-Security"
+}
+
+# Storage Account Configuration
+storage_account_name               = "stdojosecurity001"
+storage_account_tier              = "Standard"
+storage_replication_type          = "LRS"
+storage_public_access_enabled     = false # true
+allow_blob_public_access          = false
+storage_default_network_action    = "Deny"
