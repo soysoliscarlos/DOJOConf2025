@@ -4,10 +4,88 @@ Este proyecto implementa automatización de seguridad en Azure utilizando Terraf
 
 ## Arquitectura del Proyecto
 
-- **Terraform**: Infraestructura como código para despliegue automatizado
-- **Logic Apps**: Automatización de flujos de trabajo de seguridad
-- **Azure Policy**: Políticas de cumplimiento y gobernanza
-- **Storage Account**: Almacenamiento seguro para logs y reportes
+El proyecto implementa una arquitectura de seguridad en capas diseñada para la automatización de la detección, remediación y cumplimiento de políticas de seguridad en Azure.
+
+### Componentes de la Arquitectura
+
+#### 1. **Capa de Infraestructura como Código (IaC)**
+
+- **Terraform**: Motor principal para el despliegue de infraestructura
+  - Versión requerida: >= 1.0
+  - Provider AzureRM: ~> 4.0
+  - Separación modular por responsabilidades
+
+#### 2. **Capa de Automatización y Orquestación**
+
+- **Logic Apps**: Orquestación de flujos de trabajo de seguridad
+  - Trigger de recurrencia automática (cada minuto)
+  - Integración con Azure Management API
+  - Automatización de remediación de Storage Accounts
+  - Notificaciones mediante webhooks
+  - Managed Identity para autenticación segura
+
+#### 3. **Capa de Cumplimiento y Gobernanza**
+
+- **Azure Policy**: Marco de políticas de cumplimiento
+  - Políticas personalizadas para deshabilitar acceso público
+  - Políticas de auditoría para monitoreo continuo
+  - Iniciativas de políticas agrupadas
+  - Asignación a nivel de suscripción
+  - Capacidades de remediación automática (DeployIfNotExists)
+
+#### 4. **Capa de Almacenamiento y Logs**
+
+- **Storage Account**: Almacenamiento seguro centralizado
+  - Configuración de alta seguridad
+  - Contenedores dedicados para logs y reportes
+  - Acceso restringido y cifrado
+  - Integración con sistemas de monitoreo
+
+#### 5. **Capa de Seguridad e Identidad**
+
+- **Managed Identity**: Autenticación sin credenciales
+- **Role-Based Access Control (RBAC)**: Permisos granulares
+- **Resource Groups**: Aislamiento y organización de recursos
+
+### Flujo de Automatización
+
+```text
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│   Azure Policy  │    │   Logic Apps    │    │ Storage Account │
+│                 │    │                 │    │                 │
+│ • Evalúa        │───▶│ • Se ejecuta    │───▶│ • Almacena logs │
+│   cumplimiento  │    │   cada minuto   │    │ • Guarda        │
+│ • Identifica    │    │ • Lista Storage │    │   reportes      │
+│   violaciones   │    │   Accounts      │    │ • Evidencias    │
+│ • Activa        │    │ • Ejecuta       │    │   de remediación│
+│   remediación   │    │   remediación   │    │                 │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+          │                       │                       │
+          │              ┌─────────────────┐              │
+          └─────────────▶│   Webhooks      │◀─────────────┘
+                         │                 │
+                         │ • Notificaciones│
+                         │ • Alertas       │
+                         │ • Integración   │
+                         │   externa       │
+                         └─────────────────┘
+```
+
+### Módulos del Proyecto
+
+#### **resources/** - Infraestructura Principal
+
+- Despliegue de recursos core de Azure
+- Configuración de Logic Apps con workflows complejos
+- Implementación de Storage Accounts seguros
+- Gestión de identidades y permisos
+
+#### **azurepolicy/** - Gobierno y Cumplimiento
+
+- Definiciones de políticas personalizadas
+- Iniciativas de seguridad para Storage Accounts
+- Asignaciones a nivel de suscripción
+- Configuración de remediación automática
 
 ## Prerrequisitos
 
